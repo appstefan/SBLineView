@@ -17,8 +17,8 @@ Pod::Spec.new do |s|
   s.platform = :ios
   s.ios.deployment_target = '9.0'
   s.name         = "SBLineView"
-  s.version      = "0.1.0"
-  s.summary      = "SBLineView draws simple interactive line charts"
+  s.version      = "0.1.1"
+  s.summary      = "A minimalist, designable line chart view in Swift"
   s.requires_arc = true
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
@@ -26,7 +26,7 @@ Pod::Spec.new do |s|
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   s.description  = <<-DESC
-  SBLineView draws simple interactive line charts with Swift
+                  Creates customizable interactive line charts using the common datasource and delegate protocol pattern.
                    DESC
 
   s.homepage     = "https://github.com/appstefan/SBLineView"
@@ -83,6 +83,7 @@ Pod::Spec.new do |s|
 
   s.source       = { :git => "https://github.com/appstefan/SBLineView.git", :tag => "#{s.version}" }
 
+  s.social_media_url = "https://twitter.com/BrittonStefan"
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #

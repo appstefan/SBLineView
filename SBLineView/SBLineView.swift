@@ -6,7 +6,7 @@
 //  Copyright © 2016 Appstefan. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 public protocol SBLineViewDelegate {
     func lineView(_ lineView: SBLineView, didSelect value: Double, at index: Int)
@@ -15,7 +15,7 @@ public protocol SBLineViewDelegate {
 
 public protocol SBLineViewDataSource {
     func numberOfPointsIn(_ lineView: SBLineView) -> Int
-    func lineView(_ lineView: SBLineView, valueAt index: Int) -> Double
+    func lineView(_ lineView: SBLineView, valueFor index: Int) -> Double
 }
 
 @IBDesignable
@@ -36,8 +36,7 @@ public class SBLineView: UIView {
 
     // MARK: - Touch Line
     let touchLine = CAShapeLayer()
-    @IBInspectable var curvedTouchLine: Bool = false
-    @IBInspectable var touchLineStrokeColor: UIColor = .blue
+    @IBInspectable var touchLineStrokeColor: UIColor = UIColor(red: 6/255.0, green: 104/255.0, blue: 179/255.0, alpha: 1.0)
     @IBInspectable var touchLineWidth: CGFloat = 1
     @IBInspectable var touchLineShowAcrossTop: Bool = false
     let touchLineTopLeft = CAShapeLayer()
@@ -51,15 +50,15 @@ public class SBLineView: UIView {
     // MARK: - Touch Point
     let touchPoint = CAShapeLayer()
     @IBInspectable var touchPointSize: CGFloat = 8
-    @IBInspectable var touchPointStrokeColor: UIColor = .blue
+    @IBInspectable var touchPointStrokeColor: UIColor = UIColor(red: 6/255.0, green: 104/255.0, blue: 179/255.0, alpha: 1.0)
     @IBInspectable var touchPointStrokeWidth: CGFloat = 1
     @IBInspectable var touchPointFillColor: UIColor = .clear
     
     // MARK - Insets
-    @IBInspectable var leftInset: CGFloat = 1 { didSet { setNeedsDisplay() } }
-    @IBInspectable var rightInset: CGFloat = 1 { didSet { setNeedsDisplay() } }
-    @IBInspectable var topInset: CGFloat = 1 { didSet { setNeedsDisplay() } }
-    @IBInspectable var bottomInset: CGFloat = 1 { didSet { setNeedsDisplay() } }
+    @IBInspectable var leftInset: CGFloat = 0 { didSet { setNeedsDisplay() } }
+    @IBInspectable var rightInset: CGFloat = 0 { didSet { setNeedsDisplay() } }
+    @IBInspectable var topInset: CGFloat = 4 { didSet { setNeedsDisplay() } }
+    @IBInspectable var bottomInset: CGFloat = 4 { didSet { setNeedsDisplay() } }
     
     // MARK - Data
     public var data: [Double] = [0, 2, 1, 3, 5, 4, 8, 6.5, 7.8, 9.2, 9.0, 5.5, 10]
@@ -105,7 +104,7 @@ public class SBLineView: UIView {
         var newData = [Double]()
         let numberOfPoints = (dataSource?.numberOfPointsIn(self))!
         for index in 0..<numberOfPoints {
-            let dataPoint = dataSource?.lineView(self, valueAt: index)
+            let dataPoint = dataSource?.lineView(self, valueFor: index)
             newData.append(dataPoint!)
         }
         data = newData
@@ -135,12 +134,13 @@ public class SBLineView: UIView {
         context.setLineWidth(lineStrokeWidth)
         var startPoint = CGPoint.zero
         if let firstPoint = data.first {
-            startPoint = CGPoint(x: xCoordinate(for: 0), y: yCoordinate(for: firstPoint))
+            startPoint = CGPoint(x: xCoordinate(0), y: yCoordinate(firstPoint))
         }
+    
         context.move(to: startPoint)
         var lastPoint: CGPoint?
         for (index, value) in data.enumerated() {
-            let point = CGPoint(x: xCoordinate(for: index), y: yCoordinate(for: value))
+            let point = CGPoint(x: xCoordinate(index), y: yCoordinate(value))
             if let last = lastPoint {
                 if curveLines {
                     let control1 = CGPoint(x: last.x + curveControlOffset, y: last.y)
@@ -160,7 +160,7 @@ public class SBLineView: UIView {
         context.setStrokeColor(pointStrokeColor.cgColor)
         context.setLineWidth(pointStrokeWidth)
         for (index, value) in data.enumerated() {
-            let point = CGPoint(x: xCoordinate(for: index), y: yCoordinate(for: value))
+            let point = CGPoint(x: xCoordinate(index), y: yCoordinate(value))
             context.fillEllipse(in: CGRect(origin: CGPoint(x: point.x - pointSize/2, y: point.y - pointSize/2), size: CGSize(width: pointSize, height: pointSize)))
             context.strokeEllipse(in: CGRect(origin: CGPoint(x: point.x - pointSize/2, y: point.y - pointSize/2), size: CGSize(width: pointSize, height: pointSize)))
         }
@@ -173,7 +173,7 @@ public class SBLineView: UIView {
         return  (frame.width - leftInset - rightInset - pointSize) / CGFloat(data.count - 1)
     }
     
-    func yCoordinate(for value: Double) -> CGFloat {
+    func yCoordinate(_ value: Double) -> CGFloat {
         let drawHeight = frame.height - topInset - bottomInset - pointSize
         let range = (maxData - minData)
         let rangeRelativeValue = (value - minData)
@@ -181,12 +181,12 @@ public class SBLineView: UIView {
         return yCoordinate
     }
     
-    func xCoordinate(for index: Int) -> CGFloat {
+    func xCoordinate(_ index: Int) -> CGFloat {
         return (CGFloat(index) * stepWidth()) + leftInset + (pointSize/2)
     }
     
-    func index(for location: CGPoint) -> Int {
-        return min(data.count-1, max(0, Int(round((location.x-leftInset-(pointSize/2)) / stepWidth()))))
+    func index(_ location: CGPoint) -> Int {
+        return min(max(0, data.count-1), max(0, Int(round((location.x-leftInset-(pointSize/2)) / stepWidth()))))
     }
     
     //  MARK: - Touches
@@ -198,20 +198,20 @@ public class SBLineView: UIView {
             touchLine.strokeColor = touchLineStrokeColor.cgColor
             touchLine.lineCap = kCALineCapSquare
             touchLine.fillColor = UIColor.clear.cgColor
-            touchLine.path = verticalPath(for: location)
+            touchLine.path = verticalPath(location)
             layer.addSublayer(touchLine)
             
             valueLine.lineWidth = valueLineWidth
             valueLine.strokeColor = valueLineStrokeColor.cgColor
             valueLine.lineCap = kCALineCapSquare
             valueLine.lineDashPattern = [5, 5]
-            valueLine.path = horizontalPath(for: location)
+            valueLine.path = horizontalPath(location)
             layer.addSublayer(valueLine)
             
             touchPoint.lineWidth = touchPointStrokeWidth
             touchPoint.fillColor = touchPointFillColor.cgColor
             touchPoint.strokeColor = touchPointStrokeColor.cgColor
-            touchPoint.path = pointPath(for: location)
+            touchPoint.path = pointPath(location)
             layer.addSublayer(touchPoint)
             
             if touchLineShowAcrossTop {
@@ -245,13 +245,13 @@ public class SBLineView: UIView {
                 
                 let leftDuration: Double = 0.55 * Double((bounds.width - (location.x+1)) / bounds.width)
                 let rightDuration: Double = 0.55 * Double(location.x / bounds.width)
-                animate(layer: touchLineTopLeft, to: nextLeftPath.cgPath, duration: leftDuration)
-                animate(layer: touchLineTopRight, to: nextRightPath.cgPath, duration: rightDuration)
+                animate(touchLineTopLeft, to: nextLeftPath.cgPath, duration: leftDuration)
+                animate(touchLineTopRight, to: nextRightPath.cgPath, duration: rightDuration)
 
             }
             
-            let index = self.index(for: location)
-            if let delegate = self.delegate {
+            let index = self.index(location)
+            if let delegate = self.delegate, index < data.count {
                 delegate.lineView(self, didSelect: data[index], at: index)
             }
         }
@@ -260,13 +260,11 @@ public class SBLineView: UIView {
     override open func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesMoved(touches, with: event)
         if let location = touches.first?.location(in: self) {
-//            touchLine.path = verticalPath(for: location)
-//            touchLine.path = curvedVerticalPath(for: location)
-            animateBounce(layer: touchLine, to:  (curvedTouchLine ? curvedVerticalPath(for: location) : verticalPath(for: location)))
-            animate(layer: valueLine, to: horizontalPath(for: location))
-            animate(layer: touchPoint, to: pointPath(for: location))
-            let index = self.index(for: location)
-            if let delegate = self.delegate {
+            animateBounce(touchLine, to: verticalPath(location))
+            animate(valueLine, to: horizontalPath(location))
+            animate(touchPoint, to: pointPath(location))
+            let index = self.index(location)
+            if let delegate = self.delegate, index < data.count  {
                 delegate.lineView(self, didSelect: data[index], at: index)
             }
         }
@@ -302,7 +300,7 @@ public class SBLineView: UIView {
 
     // MARK: - Animations
     
-    func animate(layer: CAShapeLayer, to path: CGPath, duration: CFTimeInterval) {
+    func animate(_ layer: CAShapeLayer, to path: CGPath, duration: CFTimeInterval) {
         if layer.path != path {
             let basicAnimation = CABasicAnimation(keyPath: "path")
             basicAnimation.duration = duration
@@ -314,7 +312,7 @@ public class SBLineView: UIView {
         }
     }
     
-    func animate(layer: CAShapeLayer, to path: CGPath) {
+    func animate(_ layer: CAShapeLayer, to path: CGPath) {
         if layer.path != path {
             let basicAnimation = CABasicAnimation(keyPath: "path")
             basicAnimation.duration = 0.15
@@ -326,7 +324,7 @@ public class SBLineView: UIView {
         }
     }
     
-    func animateBounce(layer: CAShapeLayer, to path: CGPath) {
+    func animateBounce(_ layer: CAShapeLayer, to path: CGPath) {
         if layer.path != path {
             let basicAnimation = CABasicAnimation(keyPath: "path")
             basicAnimation.duration = 0.15
@@ -340,41 +338,33 @@ public class SBLineView: UIView {
     
     // MARK: - Paths
     
-    func curvedVerticalPath(for location: CGPoint) -> CGPath {
-        let topPoint = CGPoint(x: location.x, y: 0)
-        let midPoint = CGPoint(x: xCoordinate(for: index(for: location)), y: yCoordinate(for: data[index(for: location)]))
-        let bottomPoint = CGPoint(x: location.x, y: frame.height)
-        
-        let midControl1 = CGPoint(x: midPoint.x, y: topPoint.y + 30)
-        let midControl2 = CGPoint(x: midPoint.x, y: midPoint.y - 30)
-
-        let bottomControl1 = CGPoint(x: midPoint.x, y: midPoint.y + 10)
-        let bottomControl2 = CGPoint(x: bottomPoint.x, y: bottomPoint.y - 10)
-        
-        let path = UIBezierPath()
-        path.move(to: topPoint)
-        path.addCurve(to: midPoint, controlPoint1: midControl1, controlPoint2: midControl2)
-        path.addCurve(to: bottomPoint, controlPoint1: bottomControl1, controlPoint2: bottomControl2)
-        return path.cgPath
-    }
-    
-    func verticalPath(for location: CGPoint) -> CGPath {
+    func verticalPath(_ location: CGPoint) -> CGPath {
         let path = UIBezierPath()
         path.move(to: CGPoint(x: location.x, y: 0))
+        // path.addLine(to: CGPoint(x: location.x, y: location.y - (touchPointSize/2)))
+        // path.move(to: CGPoint(x: location.x, y: location.y + (touchPointSize/2)))
         path.addLine(to: CGPoint(x: location.x, y: frame.height))
         return path.cgPath
     }
     
-    func horizontalPath(for location: CGPoint) -> CGPath {
-        let point = CGPoint(x: xCoordinate(for: index(for: location)), y: yCoordinate(for: data[index(for: location)]))
+    func horizontalPath(_ location: CGPoint) -> CGPath {
+        let index = self.index(location)
+        var point: CGPoint = .zero
+        if index < data.count {
+            point = CGPoint(x: xCoordinate(index), y: yCoordinate(data[index]))
+        }
         let path = UIBezierPath()
         path.move(to: CGPoint(x: 0, y: point.y))
         path.addLine(to: CGPoint(x: frame.width, y: point.y))
         return path.cgPath
     }
     
-    func pointPath(for location: CGPoint) -> CGPath {
-        let point = CGPoint(x: xCoordinate(for: index(for: location)), y: yCoordinate(for: data[index(for: location)]))
+    func pointPath(_ location: CGPoint) -> CGPath {
+        let index = self.index(location)
+        var point: CGPoint = .zero
+        if index < data.count {
+            point = CGPoint(x: xCoordinate(index), y: yCoordinate(data[index]))
+        }
         return CGPath(ellipseIn: CGRect(origin: CGPoint(x: point.x - touchPointSize/2, y: point.y - touchPointSize/2), size: CGSize(width: touchPointSize, height: touchPointSize)), transform: nil)
     }
 }
