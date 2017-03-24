@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0830"
+   LastUpgradeVersion = "0700"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F85BEAF71E84BF9C00673356"
-               BuildableName = "SBLineView.framework"
-               BlueprintName = "SBLineView"
-               ReferencedContainer = "container:SBLineView.xcodeproj">
+               BlueprintIdentifier = "B0F9D723CAB0FFAA0B19D1FAF32DBB57"
+               BuildableName = "Pods_SBLineView.framework"
+               BlueprintName = "Pods-SBLineView"
+               ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,10 +45,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F85BEAF71E84BF9C00673356"
-            BuildableName = "SBLineView.framework"
-            BlueprintName = "SBLineView"
-            ReferencedContainer = "container:SBLineView.xcodeproj">
+            BlueprintIdentifier = "B0F9D723CAB0FFAA0B19D1FAF32DBB57"
+            BuildableName = "Pods_SBLineView.framework"
+            BlueprintName = "Pods-SBLineView"
+            ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -60,15 +60,6 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F85BEAF71E84BF9C00673356"
-            BuildableName = "SBLineView.framework"
-            BlueprintName = "SBLineView"
-            ReferencedContainer = "container:SBLineView.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

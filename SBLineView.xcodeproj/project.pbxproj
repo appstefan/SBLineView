@@ -7,13 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8791B64C4F495CC5801F12BE /* Pods_SBLineView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2587418F9CD2D015E25215A6 /* Pods_SBLineView.framework */; };
 		F85BEAFD1E84BF9C00673356 /* SBLineView.h in Headers */ = {isa = PBXBuildFile; fileRef = F85BEAFB1E84BF9C00673356 /* SBLineView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F85BEB041E84C6B800673356 /* SBLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85BEB031E84C6B800673356 /* SBLineView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		10CB4A5ACBF9E5C92BD66E9A /* Pods-SBLineView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SBLineView.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SBLineView/Pods-SBLineView.debug.xcconfig"; sourceTree = "<group>"; };
+		2587418F9CD2D015E25215A6 /* Pods_SBLineView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SBLineView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC0C506A04F0D4E7BAE591AF /* Pods-SBLineView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SBLineView.release.xcconfig"; path = "Pods/Target Support Files/Pods-SBLineView/Pods-SBLineView.release.xcconfig"; sourceTree = "<group>"; };
 		F85BEAF81E84BF9C00673356 /* SBLineView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SBLineView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F85BEAFB1E84BF9C00673356 /* SBLineView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBLineView.h; sourceTree = "<group>"; };
 		F85BEAFC1E84BF9C00673356 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F85BEB031E84C6B800673356 /* SBLineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SBLineView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -21,17 +27,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8791B64C4F495CC5801F12BE /* Pods_SBLineView.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		46ED8EB1AEE06C7DE959C900 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2587418F9CD2D015E25215A6 /* Pods_SBLineView.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B77D470D09F6AC7A72315DD4 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				10CB4A5ACBF9E5C92BD66E9A /* Pods-SBLineView.debug.xcconfig */,
+				EC0C506A04F0D4E7BAE591AF /* Pods-SBLineView.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		F85BEAEE1E84BF9C00673356 = {
 			isa = PBXGroup;
 			children = (
 				F85BEAFA1E84BF9C00673356 /* SBLineView */,
 				F85BEAF91E84BF9C00673356 /* Products */,
+				B77D470D09F6AC7A72315DD4 /* Pods */,
+				46ED8EB1AEE06C7DE959C900 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -47,6 +73,7 @@
 			isa = PBXGroup;
 			children = (
 				F85BEAFB1E84BF9C00673356 /* SBLineView.h */,
+				F85BEB031E84C6B800673356 /* SBLineView.swift */,
 				F85BEAFC1E84BF9C00673356 /* Info.plist */,
 			);
 			path = SBLineView;
@@ -70,10 +97,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F85BEB001E84BF9C00673356 /* Build configuration list for PBXNativeTarget "SBLineView" */;
 			buildPhases = (
+				33B133D4BB2DF88FDA4602CA /* [CP] Check Pods Manifest.lock */,
 				F85BEAF31E84BF9C00673356 /* Sources */,
 				F85BEAF41E84BF9C00673356 /* Frameworks */,
 				F85BEAF51E84BF9C00673356 /* Headers */,
 				F85BEAF61E84BF9C00673356 /* Resources */,
+				224B4451CDE171E2514F2E30 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -96,6 +125,7 @@
 					F85BEAF71E84BF9C00673356 = {
 						CreatedOnToolsVersion = 8.3;
 						DevelopmentTeam = 9AP3GRDUFP;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -127,11 +157,45 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		224B4451CDE171E2514F2E30 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SBLineView/Pods-SBLineView-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		33B133D4BB2DF88FDA4602CA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		F85BEAF31E84BF9C00673356 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F85BEB041E84C6B800673356 /* SBLineView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,7 +305,9 @@
 		};
 		F85BEB011E84BF9C00673356 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 10CB4A5ACBF9E5C92BD66E9A /* Pods-SBLineView.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 9AP3GRDUFP;
@@ -254,13 +320,16 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.stefan.SBLineView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		F85BEB021E84BF9C00673356 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EC0C506A04F0D4E7BAE591AF /* Pods-SBLineView.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 9AP3GRDUFP;
@@ -296,6 +365,7 @@
 				F85BEB021E84BF9C00673356 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
