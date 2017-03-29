@@ -8,9 +8,9 @@
 
 import Foundation
 
-public protocol SBLineViewDelegate {
-    func lineView(_ lineView: SBLineView, didSelect value: Double, at index: Int)
-    func lineViewTouchesEnded(_ lineView: SBLineView)
+@objc public protocol SBLineViewDelegate {
+    @objc optional func lineView(_ lineView: SBLineView, didSelect value: Double, at index: Int)
+    @objc optional func lineViewTouchesEnded(_ lineView: SBLineView)
 }
 
 public protocol SBLineViewDataSource {
@@ -251,8 +251,8 @@ public class SBLineView: UIView {
             }
             
             let index = self.index(location)
-            if let delegate = self.delegate, index < data.count {
-                delegate.lineView(self, didSelect: data[index], at: index)
+            if index < data.count {
+                delegate?.lineView?(self, didSelect: data[index], at: index)
             }
         }
     }
@@ -260,12 +260,12 @@ public class SBLineView: UIView {
     override open func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesMoved(touches, with: event)
         if let location = touches.first?.location(in: self) {
-            animateBounce(touchLine, to: verticalPath(location))
+            moveLayer(touchLine, to: verticalPath(location))
             animate(valueLine, to: horizontalPath(location))
             animate(touchPoint, to: pointPath(location))
             let index = self.index(location)
-            if let delegate = self.delegate, index < data.count  {
-                delegate.lineView(self, didSelect: data[index], at: index)
+            if index < data.count  {
+                delegate?.lineView?(self, didSelect: data[index], at: index)
             }
         }
     }
@@ -279,9 +279,7 @@ public class SBLineView: UIView {
             touchLineTopRight.removeFromSuperlayer()
             touchLineTopLeft.removeFromSuperlayer()
         }
-        if let delegate = self.delegate {
-            delegate.lineViewTouchesEnded(self)
-        }
+        delegate?.lineViewTouchesEnded?(self)
     }
     
     override open func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -293,9 +291,7 @@ public class SBLineView: UIView {
             touchLineTopRight.removeFromSuperlayer()
             touchLineTopLeft.removeFromSuperlayer()
         }
-        if let delegate = self.delegate {
-            delegate.lineViewTouchesEnded(self)
-        }
+        delegate?.lineViewTouchesEnded?(self)
     }
 
     // MARK: - Animations
@@ -332,6 +328,12 @@ public class SBLineView: UIView {
             basicAnimation.toValue = path
             basicAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
             layer.add(basicAnimation, forKey: "change path")
+            layer.path = path
+        }
+    }
+    
+    func moveLayer(_ layer: CAShapeLayer, to path: CGPath) {
+        if layer.path != path {
             layer.path = path
         }
     }
