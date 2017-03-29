@@ -2,11 +2,11 @@ Pod::Spec.new do |s|
   s.platform = :ios
   s.ios.deployment_target = '9.0'
   s.name         = "SBLineView"
-  s.version      = "0.1.2"
-  s.summary      = "A minimalist, designable line chart view in Swift"
+  s.version      = "0.1.3"
+  s.summary      = "Interactive minimalistic line chart view in Swift"
   s.requires_arc = true
   s.description  = <<-DESC
-                  Creates customizable interactive line charts using the common datasource and delegate protocol pattern.
+                  Creates line charts driven by datasource and delegate protocols. Fully IBDesignable for easy customization in interface builder.
                    DESC
   s.homepage     = "https://github.com/appstefan/SBLineView"
   s.license      = { :type => "MIT", :file => "LICENSE.txt" }

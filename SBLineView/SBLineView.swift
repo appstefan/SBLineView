@@ -21,44 +21,44 @@ public protocol SBLineViewDataSource {
 @IBDesignable
 public class SBLineView: UIView {
     // MARK: - Line
-    @IBInspectable public var lineStrokeColor: UIColor = .black { didSet { setNeedsDisplay() } }
-    @IBInspectable public var lineStrokeWidth: CGFloat = 1 { didSet { setNeedsDisplay() } }
+    @IBInspectable dynamic public var lineStrokeColor: UIColor = .black { didSet { setNeedsDisplay() } }
+    @IBInspectable dynamic public var lineStrokeWidth: CGFloat = 1 { didSet { setNeedsDisplay() } }
     
     // MARK: - Point
-    @IBInspectable var pointSize: CGFloat = 0 { didSet { setNeedsDisplay() } }
-    @IBInspectable var pointFillColor: UIColor = .white { didSet { setNeedsDisplay() } }
-    @IBInspectable var pointStrokeColor: UIColor = .black { didSet { setNeedsDisplay() } }
-    @IBInspectable var pointStrokeWidth: CGFloat = 1 { didSet { setNeedsDisplay() } }
+    @IBInspectable dynamic public var pointSize: CGFloat = 0 { didSet { setNeedsDisplay() } }
+    @IBInspectable dynamic public var pointFillColor: UIColor = .white { didSet { setNeedsDisplay() } }
+    @IBInspectable dynamic public var pointStrokeColor: UIColor = .black { didSet { setNeedsDisplay() } }
+    @IBInspectable dynamic public var pointStrokeWidth: CGFloat = 1 { didSet { setNeedsDisplay() } }
 
     // MARK: - Curve
-    @IBInspectable var curveLines: Bool = true { didSet { setNeedsDisplay() } }
+    @IBInspectable dynamic public var curveLines: Bool = true { didSet { setNeedsDisplay() } }
     var curveControlOffset: CGFloat = 20
 
     // MARK: - Touch Line
     let touchLine = CAShapeLayer()
-    @IBInspectable var touchLineStrokeColor: UIColor = UIColor(red: 6/255.0, green: 104/255.0, blue: 179/255.0, alpha: 1.0)
-    @IBInspectable var touchLineWidth: CGFloat = 1
-    @IBInspectable var touchLineShowAcrossTop: Bool = false
+    @IBInspectable dynamic public var touchLineStrokeColor: UIColor = UIColor(red: 6/255.0, green: 104/255.0, blue: 179/255.0, alpha: 1.0)
+    @IBInspectable dynamic public var touchLineWidth: CGFloat = 1
+    @IBInspectable dynamic public var touchLineShowAcrossTop: Bool = false
     let touchLineTopLeft = CAShapeLayer()
     let touchLineTopRight = CAShapeLayer()
 
     // MARK: - Value Line
     let valueLine = CAShapeLayer()
-    @IBInspectable var valueLineStrokeColor: UIColor = UIColor.lightGray
-    @IBInspectable var valueLineWidth: CGFloat = 1 / UIScreen.main.scale
+    @IBInspectable dynamic public var valueLineStrokeColor: UIColor = UIColor.lightGray
+    @IBInspectable dynamic public var valueLineWidth: CGFloat = 1 / UIScreen.main.scale
 
     // MARK: - Touch Point
     let touchPoint = CAShapeLayer()
-    @IBInspectable var touchPointSize: CGFloat = 8
-    @IBInspectable var touchPointStrokeColor: UIColor = UIColor(red: 6/255.0, green: 104/255.0, blue: 179/255.0, alpha: 1.0)
-    @IBInspectable var touchPointStrokeWidth: CGFloat = 1
-    @IBInspectable var touchPointFillColor: UIColor = .clear
+    @IBInspectable dynamic public var touchPointSize: CGFloat = 8
+    @IBInspectable dynamic public var touchPointStrokeColor: UIColor = UIColor(red: 6/255.0, green: 104/255.0, blue: 179/255.0, alpha: 1.0)
+    @IBInspectable dynamic public var touchPointStrokeWidth: CGFloat = 1
+    @IBInspectable dynamic public var touchPointFillColor: UIColor = .clear
     
     // MARK - Insets
-    @IBInspectable var leftInset: CGFloat = 0 { didSet { setNeedsDisplay() } }
-    @IBInspectable var rightInset: CGFloat = 0 { didSet { setNeedsDisplay() } }
-    @IBInspectable var topInset: CGFloat = 4 { didSet { setNeedsDisplay() } }
-    @IBInspectable var bottomInset: CGFloat = 4 { didSet { setNeedsDisplay() } }
+    @IBInspectable dynamic public var leftInset: CGFloat = 0 { didSet { setNeedsDisplay() } }
+    @IBInspectable dynamic public var rightInset: CGFloat = 0 { didSet { setNeedsDisplay() } }
+    @IBInspectable dynamic public var topInset: CGFloat = 4 { didSet { setNeedsDisplay() } }
+    @IBInspectable dynamic public var bottomInset: CGFloat = 4 { didSet { setNeedsDisplay() } }
     
     // MARK - Data
     public var data: [Double] = [0, 2, 1, 3, 5, 4, 8, 6.5, 7.8, 9.2, 9.0, 5.5, 10]
